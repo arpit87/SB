@@ -12,5 +12,9 @@
     <string name="buttonhirenow">Hire Now</string>
     <string name="map_api_key">AIzaSyD7B_JmOOy1C9lCXhRJhdLXUeZ36P_1RuM</string>
     <string name="chat_header">Chat:</string>
+    <string name="stringlogin">Login:</string>
+    <string name="stringpassword">Password:</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
 
 </resources>

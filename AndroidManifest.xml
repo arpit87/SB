@@ -29,6 +29,10 @@
             android:theme="@android:style/Theme.NoTitleBar" 
             android:screenOrientation="portrait" >
         </activity>
+         <activity android:name=".Activities.LoginActivity" 
+            android:theme="@android:style/Theme.NoTitleBar" 
+            android:screenOrientation="portrait" >
+        </activity>
                    
          
                    
