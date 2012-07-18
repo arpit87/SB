@@ -56,27 +56,17 @@
             android:onClick="onClickButtons"/>
 
     <Button
-            android:id="@+id/butBack"
+            android:id="@+id/registerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"            
             android:layout_marginBottom="25dp"
             android:layout_marginLeft="25dp"
             android:padding="15dp"
-            android:text="@string/back"
+            android:text="@string/registerButton"
             android:onClick="onClickButtons"/>
 
-    <Button
-            android:id="@+id/butNext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/butBack"
-            android:layout_marginRight="25dp"
-            android:padding="15dp"
-            android:text="@string/next"
-            android:onClick="onClickButtons"/>
+    
 
     <ProgressBar
             android:id="@+id/queryLogin_progressBar"

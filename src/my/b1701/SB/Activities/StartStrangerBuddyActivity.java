@@ -14,7 +14,7 @@ public class StartStrangerBuddyActivity extends Activity {
         setContentView(R.layout.main);
         
                 
-       startActivity(new Intent().setClass(this, StartButtonActivity.class));
+       startActivity(new Intent().setClass(this, MyMapView.class));
       // startActivity(intent);
         
         

@@ -20,7 +20,7 @@
            <TextView
             android:id="@+id/fromLocTextView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"            
+            android:layout_height="15dp"            
             android:text="to" />
            
         <EditText

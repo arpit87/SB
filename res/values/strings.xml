@@ -16,5 +16,7 @@
     <string name="stringpassword">Password:</string>
     <string name="back">Back</string>
     <string name="next">Next</string>
+    <string name="registerButton">Not Registered?</string>
+    
 
 </resources>
