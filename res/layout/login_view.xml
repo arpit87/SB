@@ -25,8 +25,7 @@
 
             <EditText
                     android:id="@+id/edit_login"
-                    android:layout_width="fill_parent"
-                    android:text="test"
+                    android:layout_width="fill_parent"                    
                     android:inputType="text"/>
         </TableRow>
 
@@ -40,8 +39,7 @@
                     android:textColor="@color/black"/>
 
             <EditText
-                    android:id="@+id/edit_password"
-                    android:text="test"
+                    android:id="@+id/edit_password"                    
                     android:inputType="textPassword"/>
         </TableRow>
     </TableLayout>
@@ -72,7 +70,7 @@
             android:id="@+id/queryLogin_progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/butBack"
+            android:layout_alignBottom="@+id/registerButton"
             style="?android:attr/progressBarStyleInverse"
             android:layout_centerHorizontal="true" android:visibility="gone"/>
 

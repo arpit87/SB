@@ -1,6 +1,9 @@
 package my.b1701.SB.Activities;
 
+import my.b1701.SB.R;
 import android.app.Activity;
+import android.os.Bundle;
+import android.widget.ProgressBar;
 
 
 public class LoginActivity extends Activity  {
