@@ -9,7 +9,7 @@ import java.util.List;
 import my.b1701.SB.R;
 import my.b1701.SB.Activities.MyMapView;
 import my.b1701.SB.Activities.UserPopUpActivity;
-import my.b1701.SB.Users.User;
+import my.b1701.SB.Users.OtherUser;
 
 import android.app.Activity;
 import android.content.Context;
@@ -34,11 +34,11 @@ public class AllUsersItemizedOverlay extends ItemizedOverlay<IndividualUserMapOv
 		   this.myMapActivity=mapactivity;		 
 		}
 	
-	public void addAllUserOverlay(List<User> allUsers) {		
-		Iterator<User> it = allUsers.iterator();
+	public void addAllUserOverlay(List<OtherUser> allUsers) {		
+		Iterator<OtherUser> it = allUsers.iterator();
 		while(it.hasNext() )
 		{
-			User u = it.next();
+			OtherUser u = it.next();
 			IndividualUserMapOverLayItem overlayItem=new IndividualUserMapOverLayItem(u.GetUserGeopoint(),u.getUsername(),u.getUserDestination());
 			allUserListOverlay.add(overlayItem);
 			populate();

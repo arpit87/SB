@@ -3,7 +3,7 @@
     <string name="app_name">Mystrangerbuddy</string>
     <string name="url_strangerbuddy">www.strangerbuddy.com</string>
     <string name="title1">StrangerBuddy</string>
-    <color name="black">#000000</color>
+    <color name="black">#0000</color>
     <color name="white">#FFFFFF</color>
     <color name="dark_gray">#808080</color>
     <string name="slogan">Share,anything everything</string>
@@ -12,15 +12,13 @@
     <string name="buttonhirenow">Hire Now</string>
     <string name="map_api_key">AIzaSyD7B_JmOOy1C9lCXhRJhdLXUeZ36P_1RuM</string>
     <string name="chat_header">Chat:</string>
-    <string name="stringlogin">Login:</string>
-    <string name="stringpassword">Password:</string>
-    <string name="back">Back</string>
-    <string name="next">Next</string>
-    <string name="registerButton">Not Registered?</string>
+    <string name="searchaddressheader">Address search</string>
     <string name="full_name">Name:</string>
-    <string name="username">Username:</string>
+    <string name="stringpassword">Password:</string>
     <string name="retype_pass">Retype Pass:</string>
-    <string name="buttonregister">Register</string>
-    
+    <string name="buttonregister">Not Registered?</string>
+    <string name="username">Username</string>
+    <string name="stringlogin">Login</string>
+    <string name="registerButton">Register</string>
 
 </resources>

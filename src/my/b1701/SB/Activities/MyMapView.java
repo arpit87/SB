@@ -1,33 +1,25 @@
 package my.b1701.SB.Activities;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import my.b1701.SB.R;
 import my.b1701.SB.HttpClient.HttpQueries;
 import my.b1701.SB.LocationHelpers.AllUsersItemizedOverlay;
-import my.b1701.SB.LocationHelpers.IndividualUserMapOverLayItem;
-import my.b1701.SB.LocationHelpers.MyLocation;
 import my.b1701.SB.Server.ServerQueries;
 import my.b1701.SB.Server.ServerResponse;
-import my.b1701.SB.Users.User;
-import my.b1701.SB.test.JSONTest;
-import android.app.Activity;
+import my.b1701.SB.Users.OtherUser;
+
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import HelperClasses.ThisAppInstallation;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -35,13 +27,15 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-
-import com.google.android.maps.*;
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.MyLocationOverlay;
 
 public class MyMapView extends MapActivity implements LocationListener { 
 	
@@ -52,6 +46,7 @@ public class MyMapView extends MapActivity implements LocationListener {
 	private MapController myMapcontroller;
 	private String locProvider;
 	private Location location;
+	private Location deslocation;
 	private Button serachBuddiesButton;
 	private EditText fromLocationView;
 	private EditText desLocationView;
@@ -63,8 +58,10 @@ public class MyMapView extends MapActivity implements LocationListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_view); 
         serachBuddiesButton = (Button)findViewById(R.id.searchBuddiesButton);
+        fromLocationView = (EditText)findViewById(R.id.fromLocation);
+        desLocationView = (EditText)findViewById(R.id.desLocation);        
         initMyLocation();  
-       
+        
         
     }  
     
@@ -111,8 +108,8 @@ public class MyMapView extends MapActivity implements LocationListener {
     public void onClickMapViewButtons(View v) {
         switch (v.getId()) {
         case R.id.searchBuddiesButton:
-        	//getFromAndDestinationLocation();
-        	updateNearbyBuddies();  
+        	getLocationListFromAddressString();
+        	//updateNearbyBuddies();  
         	break;
         }
     }
@@ -130,6 +127,27 @@ public class MyMapView extends MapActivity implements LocationListener {
     	  	
     	
     }
+	
+	protected void onActivityResult (int requestCode, int resultCode, Intent data) {
+		  // Collect data from the intent and use it
+		  Bundle desDetails=data.getExtras();
+		  double desLatitude = desDetails.getDouble("deslatitude");
+		  double desLongitude = desDetails.getDouble("deslongitude");
+		  deslocation = new Location(locProvider);
+		  deslocation.setLatitude(desLatitude);
+		  deslocation.setLongitude(desLongitude);
+		  updateNearbyBuddies();
+		}
+	
+	private void  getLocationListFromAddressString()
+	{
+		
+		String addressString =desLocationView.getText().toString();
+		Intent showAddressList = new Intent(this,AddressListViewActivity.class);
+		showAddressList.putExtra("addressString", addressString);	
+		int requestCode=1;
+		startActivityForResult(showAddressList, requestCode);
+	}
 
     private void updateNearbyBuddies() {
 		// TODO Auto-generated method stub
@@ -139,9 +157,12 @@ public class MyMapView extends MapActivity implements LocationListener {
 				// TODO Auto-generated method stub
 				JSONObject jsonobj=new JSONObject();
 				try {
-					jsonobj.put("userid", "arpit");
+					jsonobj.put("userid", ThisAppInstallation.id(this));
 					jsonobj.put("latitude", location.getLatitude());
 					jsonobj.put("longitude", location.getLongitude());
+					jsonobj.put("deslatitude", deslocation.getLatitude());
+					jsonobj.put("deslongitude", deslocation.getLongitude());
+					jsonobj.put("time", "3:00 pm");
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -155,12 +176,15 @@ public class MyMapView extends MapActivity implements LocationListener {
 					e.printStackTrace();
 				}
 				postEntityUser.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-				Log.d("debug", "calling server");				
+				Log.d("debug", "calling server:"+jsonobj.toString());				
 			    ServerResponse response = HttpQueries.QueryServer(HttpQueries.QueryMethod.Post, ServerQueries.POST_QUERY, postEntityUser);
 			    JSONObject jobj=response.GetJSONResponse();
-			    Log.d("debug", "server response:"+jobj.toString());
-				List<User> nearbyUsers=User.GetUsersInfoFromJSONObject(jobj);
-				PopulateNearbyUsers(nearbyUsers);
+			    if(jobj != null)
+			    	{
+			    	Log.d("debug", "server response:"+jobj.toString());
+					List<OtherUser> nearbyUsers=OtherUser.GetUsersInfoFromJSONObject(jobj);
+					PopulateNearbyUsers(nearbyUsers);
+			    	}
 				
 			//}
 			  		
@@ -168,7 +192,7 @@ public class MyMapView extends MapActivity implements LocationListener {
 		
 	}        
     
-    private void PopulateNearbyUsers(List<User> nearbyUsers) {
+    private void PopulateNearbyUsers(List<OtherUser> nearbyUsers) {
     	Drawable drawable = this.getResources().getDrawable(R.drawable.red_marker);
 		allUsersItemizedOverlay = new AllUsersItemizedOverlay(drawable,this);
 		allUsersItemizedOverlay.addAllUserOverlay(nearbyUsers);
@@ -177,6 +201,7 @@ public class MyMapView extends MapActivity implements LocationListener {
 		
 	}  
 
+    //test
 	public void onPause(){
     	super.onPause();
     	//locationmanager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);

@@ -13,7 +13,18 @@ import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 
-public class User {
+public class OtherUser {
+	
+	
+	private static Me instance;
+    
+	public static synchronized Me getInstance() {
+		if (instance == null) {
+			instance = new Me();
+	    } 
+	    return instance;
+	}
+	 
 	private String userName;	
 	private String latitude;
 	private String longitude;
@@ -21,10 +32,10 @@ public class User {
 	private String userDestination;
 	private String atTime;
 	 
-	public User()
+	public OtherUser()
 	{}
 	
-	public User(String name,String lati,String longi,String destination,String time)
+	public OtherUser(String name,String lati,String longi,String destination,String time)
 	{
 		userName=name;
 		latitude=lati;
@@ -35,9 +46,9 @@ public class User {
 		
 	}
 
-	public static List<User> GetUsersInfoFromJSONObject(JSONObject jObj)
+	public static List<OtherUser> GetUsersInfoFromJSONObject(JSONObject jObj)
 	{
-		ArrayList<User> nearbyUsers = new ArrayList<User>();
+		ArrayList<OtherUser> nearbyUsers = new ArrayList<OtherUser>();
 		try {
 			JSONArray users = jObj.getJSONArray("NearbyUsers");
 						
@@ -45,7 +56,7 @@ public class User {
 			{
 				JSONObject thisUser=users.getJSONObject(i);
 				Log.d("json",thisUser.toString());
-				User u = new User();
+				OtherUser u = new OtherUser();
 				nearbyUsers.add((u));
 				u.userName=thisUser.getString(UserAttributes.USER_ID);
 				u.latitude=thisUser.getString(UserAttributes.LATITUDE);
